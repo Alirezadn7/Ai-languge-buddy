@@ -1,38 +1,61 @@
-# Virtual Environment
+# ── Virtual environments ──
 .venv/
 venv/
 env/
+.env_venv/
 
-# Python cache
+# ── Python bytecode / cache ──
 __pycache__/
 *.py[cod]
 *$py.class
 
-# Environment variables / secrets
+# ── Environment variables / secrets ──
+# .env اصلی هیچ‌وقت کامیت نشود؛ فقط نمونه‌اش
 .env
 .env.*
 !.env.example
+.pgpass
+pgpass.conf
 
-# Testing
+# ── Local databases ──
+*.sqlite
+*.sqlite3
+*.db
+pgdata/
+postgres-data/
+
+# ── Testing / coverage ──
 .pytest_cache/
 .coverage
+.coverage.*
+coverage.xml
 htmlcov/
 
-# IDE
+# ── Type checkers / linters ──
+.mypy_cache/
+.pytype/
+.pyright/
+.ruff_cache/
+
+# ── IDE / editors ──
 .vscode/
 .idea/
+*.swp
+*.swo
+*~
 
-# OS
+# ── OS ──
 .DS_Store
 Thumbs.db
+Desktop.ini
 
-# Logs
+# ── Logs ──
 *.log
+logs/
 
-# Build / distribution
+# ── Build / distribution ──
 build/
 dist/
 *.egg-info/
-
-# Ruff
-.ruff_cache/
+*.egg
+*.whl
