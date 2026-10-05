@@ -1,4 +1,5 @@
 from fastapi import FastAPI, status
+
 from app.config import settings
 
 app = FastAPI(
