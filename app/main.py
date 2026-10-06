@@ -1,11 +1,14 @@
 from fastapi import FastAPI, status
 
 from app.config import settings
+from app.api.auth import router as auth_router
 
 app = FastAPI(
     title=settings.APP_NAME,
     debug=settings.DEBUG_MODE,
 )
+
+app.include_router(auth_router)
 
 @app.get("/" , status_code=status.HTTP_200_OK , tags=["General"])
 async def root():

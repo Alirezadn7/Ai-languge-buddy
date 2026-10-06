@@ -1,17 +1,8 @@
 from datetime import datetime
-from enum import StrEnum
-from typing import Optional
-
-from pydantic import BaseModel, EmailStr, Field, ConfigDict
+from pydantic import BaseModel, ConfigDict, EmailStr, Field
 
 
-class LanguageLevel(StrEnum):
-    A1 = "A1"
-    A2 = "A2"
-    B1 = "B1"
-    B2 = "B2"
-    C1 = "C1"
-    C2 = "C2"
+from app.models.user import LanguageLevel
 
 
 class UserProfileBase(BaseModel):
@@ -25,9 +16,9 @@ class UserProfileCreate(UserProfileBase):
 
 
 class UserProfileUpdate(BaseModel):
-    native_language: Optional[str] = Field(None, max_length=50)
-    target_language: Optional[str] = Field(None, max_length=50)
-    level: Optional[LanguageLevel] = None
+    native_language: str | None = Field(default=None, max_length=50)
+    target_language: str | None = Field(default=None, max_length=50)
+    level: LanguageLevel | None = None
 
 
 class UserProfileOut(UserProfileBase):
@@ -42,23 +33,23 @@ class UserBase(BaseModel):
 
 
 class UserCreate(UserBase):
-    password: str = Field(..., min_length=8, max_length=128)
-    profile: Optional[UserProfileCreate] = None
+    
+    password: str = Field(..., min_length=8, max_length=72)
+    profile: UserProfileCreate = Field(default_factory=UserProfileCreate)
 
 
 class UserUpdate(BaseModel):
-    email: Optional[EmailStr] = None
-    password: Optional[str] = Field(None, min_length=8, max_length=128)
-    is_active: Optional[bool] = None
+    email: EmailStr | None = None
+    password: str | None = Field(default=None, min_length=8, max_length=72)
+    is_active: bool | None = None
 
 
 class UserOut(UserBase):
     id: int
     is_active: bool
     created_at: datetime
-    profile: Optional[UserProfileOut] = None
+    profile: UserProfileOut | None = None
 
     model_config = ConfigDict(from_attributes=True)
-
     
 
