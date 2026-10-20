@@ -11,7 +11,7 @@ from app.config import settings
 
 engine = create_async_engine(
     settings.DATABASE_URL,
-    echo=settings.DEBUG_MODE,  
+    echo=settings.DEBUG_MODE,
 )
 
 
@@ -22,13 +22,11 @@ async_session_maker = async_sessionmaker(
 )
 
 
-
 class Base(DeclarativeBase):
     pass
 
 
-
-async def get_db() -> AsyncGenerator[AsyncSession, None]:
+async def get_db() -> AsyncGenerator[AsyncSession]:
     async with async_session_maker() as session:
         try:
             yield session

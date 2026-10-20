@@ -8,16 +8,15 @@ MAX_PASSWORD_BYTES = 72
 def _to_bytes(password: str) -> bytes:
     pwd_bytes = password.encode("utf-8")
     if len(pwd_bytes) > MAX_PASSWORD_BYTES:
-        raise ValueError(
-            f"Password must be at most {MAX_PASSWORD_BYTES} bytes long."
-        )
+        raise ValueError(f"Password must be at most {MAX_PASSWORD_BYTES} bytes long.")
     return pwd_bytes
 
 
-def hash_password(password: str)->str:
+def hash_password(password: str) -> str:
     salt = bcrypt.gensalt()
     hashed = bcrypt.hashpw(_to_bytes(password), salt)
     return hashed.decode("utf-8")
+
 
 def verify_password(plain_password: str, hashed_password: str) -> bool:
     try:
@@ -28,4 +27,3 @@ def verify_password(plain_password: str, hashed_password: str) -> bool:
     except ValueError:
         # Overlong password (>72 bytes) can never match.
         return False
-    

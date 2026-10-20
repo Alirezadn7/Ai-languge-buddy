@@ -1,7 +1,7 @@
 from fastapi import FastAPI, status
 
-from app.config import settings
 from app.api.auth import router as auth_router
+from app.config import settings
 
 app = FastAPI(
     title=settings.APP_NAME,
@@ -10,13 +10,15 @@ app = FastAPI(
 
 app.include_router(auth_router)
 
-@app.get("/" , status_code=status.HTTP_200_OK , tags=["General"])
+
+@app.get("/", status_code=status.HTTP_200_OK, tags=["General"])
 async def root():
     return {
-        "app_name":settings.APP_NAME,
-        "debug_mode":settings.DEBUG_MODE,
+        "app_name": settings.APP_NAME,
+        "debug_mode": settings.DEBUG_MODE,
         "message": "AI Language Buddy API is running!",
     }
+
 
 @app.get("/health", status_code=status.HTTP_200_OK, tags=["General"])
 async def health_check():

@@ -1,6 +1,6 @@
 from datetime import datetime
-from pydantic import BaseModel, ConfigDict, EmailStr, Field
 
+from pydantic import BaseModel, ConfigDict, EmailStr, Field
 
 from app.models.user import LanguageLevel
 
@@ -33,7 +33,6 @@ class UserBase(BaseModel):
 
 
 class UserCreate(UserBase):
-    
     password: str = Field(..., min_length=8, max_length=72)
     profile: UserProfileCreate = Field(default_factory=UserProfileCreate)
 
@@ -51,5 +50,3 @@ class UserOut(UserBase):
     profile: UserProfileOut | None = None
 
     model_config = ConfigDict(from_attributes=True)
-    
-

@@ -8,7 +8,7 @@ from app.models.user import User, UserProfile
 from app.schemas.user import UserCreate, UserOut
 from app.services.auth_service import hash_password
 
-router = APIRouter(prefix="/auth" , tags=["Auth"])
+router = APIRouter(prefix="/auth", tags=["Auth"])
 
 
 @router.post(
@@ -20,17 +20,14 @@ async def register_user(
     user_in: UserCreate,
     db: AsyncSession = Depends(get_db),
 ):
-    
-    existing_user = await db.scalar(
-        select(User).where(User.email == user_in.email)
-    )
+
+    existing_user = await db.scalar(select(User).where(User.email == user_in.email))
     if existing_user:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail="The entered email has already been registered.",
         )
 
-    
     try:
         hashed_pwd = hash_password(user_in.password)
     except ValueError as exc:
@@ -46,7 +43,6 @@ async def register_user(
         hashed_password=hashed_pwd,
         profile=UserProfile(**profile_data),
     )
-
 
     db.add(new_user)
     try:
