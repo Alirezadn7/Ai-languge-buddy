@@ -4,6 +4,7 @@ version = "0.1.0"
 description = "AI Language Buddy API"
 requires-python = ">=3.13"
 dependencies = [
+    "alembic>=1.20.1",
     "annotated-doc==0.0.5",
     "annotated-types==0.8.0",
     "anyio==4.15.1",
@@ -46,6 +47,12 @@ line-length = 100
 
 [tool.ruff.lint]
 ignore = ["B008"]
+
+[tool.ruff.lint.per-file-ignores]
+# app.models is imported for its side effects (it registers the tables).
+"migrations/env.py" = ["F401"]
+# Alembic writes its revisions from script.py.mako; don't reformat the generator's output.
+"migrations/versions/*" = ["I001", "UP007", "UP035"]
 
 [dependency-groups]
 dev = [
