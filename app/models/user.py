@@ -1,10 +1,14 @@
 from datetime import datetime
 from enum import StrEnum
+from typing import TYPE_CHECKING
 
 from sqlalchemy import DateTime, Enum, ForeignKey, Integer, String, func
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.database import Base
+
+if TYPE_CHECKING:
+    from app.models.chat import Conversation
 
 
 class LanguageLevel(StrEnum):
@@ -35,6 +39,13 @@ class User(Base):
         "UserProfile",
         back_populates="user",
         uselist=False,
+        cascade="all, delete-orphan",
+    )
+
+    # 1-to-Many relationship with Conversation
+    conversations: Mapped[list["Conversation"]] = relationship(
+        "Conversation",
+        back_populates="user",
         cascade="all, delete-orphan",
     )
 
