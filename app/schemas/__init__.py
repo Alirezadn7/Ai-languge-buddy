@@ -1,7 +1,9 @@
 from app.schemas.chat import (
+    AIChatResponse,
     ConversationCreate,
     ConversationDetail,
     ConversationOut,
+    ConversationPage,
     ConversationUpdate,
     MessageCreate,
     MessageOut,
@@ -19,9 +21,11 @@ from app.schemas.user import (
 )
 
 __all__ = [
+    "AIChatResponse",
     "ConversationCreate",
     "ConversationDetail",
     "ConversationOut",
+    "ConversationPage",
     "ConversationUpdate",
     "MessageCreate",
     "MessageOut",
